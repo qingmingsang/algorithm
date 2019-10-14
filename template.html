@@ -15,39 +15,46 @@
   <link href="" rel="stylesheet">
 </head>
 
-<body>1
-    1108. Defanging an IP Address
-  Given a valid (IPv4) IP address, return a defanged version of that IP address.
-
-  A defanged IP address replaces every period "." with "[.]".
-
-
-
-  Example 1:
-
-  Input: address = "1.1.1.1"
-  Output: "1[.]1[.]1[.]1"
-  Example 2:
-
-  Input: address = "255.100.50.0"
-  Output: "255[.]100[.]50[.]0"
-
-
-  Constraints:
-
-  The given address is a valid IPv4 address.
+<body>1 1108. Defanging an IP Address Given a valid (IPv4) IP address, return a defanged version of that IP address. A defanged
+  IP address replaces every period "." with "[.]". Example 1: Input: address = "1.1.1.1" Output: "1[.]1[.]1[.]1" Example
+  2: Input: address = "255.100.50.0" Output: "255[.]100[.]50[.]0" Constraints: The given address is a valid IPv4 address.
   <script>
     console.time();
-    /**
-     * @param {string} address
-     * @return {string}
-     */
-    var defangIPaddr = function (address) {
-      //return address.replace(/\./g, '[$&]');
-      return (address.split('.')).join('[.]')
-    };
-    console.log(defangIPaddr("1.1.1.1"))
-    console.log(defangIPaddr("255.100.50.0"))
+    const sort = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const sort2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const InsertionSearch = (a = [], value = 0, low = 0, high = 0) => {
+      let mid = parseInt(low + (value - a[low]) / (a[high] - a[low]) * (high - low));
+      console.log('--', low, high, '++', mid)
+      if (mid < low || mid > high) {
+        return -1;
+      }
+      if (a[mid] == value) {
+        return mid;
+      }
+      if (a[mid] > value) {
+        return InsertionSearch(a, value, low, mid - 1);
+      }
+      if (a[mid] < value) {
+        return InsertionSearch(a, value, mid + 1, high);
+      }
+    }
+    console.warn(InsertionSearch(sort, 0, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 1, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 2, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 5, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 6, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 9, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 10, 0, sort.length - 1))
+    console.warn(InsertionSearch(sort, 14, 0, sort.length - 1))
+    console.warn('--------------')
+    console.warn(InsertionSearch(sort2, 0, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 1, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 2, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 5, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 6, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 9, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort2, 11, 0, sort2.length - 1))
+    console.warn(InsertionSearch(sort, 15, 0, sort.length - 1))
     console.timeEnd();
   </script>
 </body>
