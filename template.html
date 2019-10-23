@@ -60,28 +60,34 @@ s[i] = 'L' or 'R'
  -->
   <script>
     console.time();
-    /**
-     * @param {string} s
-     * @return {number}
-     */
-    var balancedStringSplit = function (s) {
-      let count = 0,
-        balance = 0
-      for (let i = 0; i < s.length; i++) {
-        if (s[i] === 'R') {
-          balance++
-        } else {
-          balance--
-        }
-        if (balance === 0) {
-          count++
-        }
+    function insertNode(node, newNode) {
+      if (newNode.key < node.key) {
+        node.left === null ? (node.left = newNode) : (insertNode(node.left, newNode))
+      } else {
+        node.right === null ? (node.right = newNode) : (insertNode(node.right, newNode))
       }
-      return count
-    };
-    console.log(balancedStringSplit("RLRRLLRLRL"));
-    console.log(balancedStringSplit("RLLLLRRRLR"));
-    console.log(balancedStringSplit("LLLLRRRR"));
+    }
+    function BinarySearchTree() {
+      // 用于创建节点的类
+      let Node = function (key) {
+        this.key = key;
+        this.left = null;
+        this.right = null;
+      }
+      // 根节点
+      let root = null;
+      //插入一个键
+      this.insert = function (key) {
+        let newNode = new Node(key);
+        root === null ? (root = newNode) : (insertNode(root, newNode))
+      }
+    }
+    let tree = new BinarySearchTree();
+    tree.insert(20);
+    tree.insert(21);
+    tree.insert(520);
+    tree.insert(521);
+    console.log(tree);
     console.timeEnd();
   </script>
 </body>
