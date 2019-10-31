@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+804. Unique Morse Code Words
+Easy
+
+507
+
+465
+
+Favorite
+
+Share
+International Morse Code defines a standard encoding where each letter is mapped to a series of dots and dashes, as follows: "a" maps to ".-", "b" maps to "-...", "c" maps to "-.-.", and so on.
+
+For convenience, the full table for the 26 letters of the English alphabet is given below:
+
+[".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+Now, given a list of words, each word can be written as a concatenation of the Morse code of each letter. For example, "cba" can be written as "-.-..--...", (which is the concatenation "-.-." + "-..." + ".-"). We'll call such a concatenation, the transformation of a word.
+
+Return the number of different transformations among all words we have.
+
+Example:
+Input: words = ["gin", "zen", "gig", "msg"]
+Output: 2
+Explanation: 
+The transformation of each word is:
+"gin" -> "--...-."
+"zen" -> "--...-."
+"gig" -> "--...--."
+"msg" -> "--...--."
+
+There are 2 different transformations, "--...-." and "--...--.".
+Note:
+
+The length of words will be at most 100.
+Each words[i] will have length in range [1, 12].
+words[i] will only consist of lowercase letters.
+ 
+    
+ -->
+  <script>
+    console.time();
+    /**
+ * @param {string[]} words
+ * @return {number}
+ */
+    var morse = {
+      a: ".-",
+      b: "-...",
+      c: "-.-.",
+      d: "-..",
+      e: ".",
+      f: "..-.",
+      g: "--.",
+      h: "....",
+      i: "..",
+      j: ".---",
+      k: "-.-",
+      l: ".-..",
+      m: "--",
+      n: "-.",
+      o: "---",
+      p: ".--.",
+      q: "--.-",
+      r: ".-.",
+      s: "...",
+      t: "-",
+      u: "..-",
+      v: "...-",
+      w: ".--",
+      x: "-..-",
+      y: "-.--",
+      z: "--.."
+    }
+    var uniqueMorseRepresentations = function (words) {
+      let result = new Set();
+      let mor = '';
+      words.forEach((v) => {
+        mor = '';
+        for (let vv of v) {
+          mor += morse[vv];
+        }
+        result.add(mor);
+      })
+      return result.size;
+    };
+
+    var uniqueMorseRepresentations2 = function (words) {
+      let mos = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---", "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-", "..-", "...-", ".--", "-..-", "-.--", "--.."];
+      let result = new Set();
+      for (let v of words) {
+        let str = '';
+        for (let wv of v) {
+          //可以通过charCodeAt的使用，获悉a-z字母的索引
+          str += mos[wv.charCodeAt(0) - 'a'.charCodeAt(0)];
+        }
+        result.add(str);
+      }
+      return result.size;
+    };
+    console.log(uniqueMorseRepresentations(["gin", "zen", "gig", "msg"]))
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
