@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+1008. Construct Binary Search Tree from Preorder Traversal
+Medium
+
+405
+
+15
+
+Favorite
+
+Share
+Return the root node of a binary search tree that matches the given preorder traversal.
+
+(Recall that a binary search tree is a binary tree where for every node, any descendant of node.left has a value < node.val, and any descendant of node.right has a value > node.val.  Also recall that a preorder traversal displays the value of the node first, then traverses node.left, then traverses node.right.)
+
+ 
+
+Example 1:
+
+Input: [8,5,1,7,10,12]
+Output: [8,5,10,1,7,null,12]
+
+ 
+
+Note: 
+
+1 <= preorder.length <= 100
+The values of preorder are distinct.
+    
+ -->
+  <script>
+    console.time();
+    /**
+      * Definition for a binary tree node.
+      * function TreeNode(val) {
+      *     this.val = val;
+      *     this.left = this.right = null;
+      * }
+      */
+    /**
+     * @param {number[]} preorder
+     * @return {TreeNode}
+     */
+    function TreeNode(val) {
+      this.val = val;
+      this.left = null;
+      this.right = null;
+    }
+    var bstFromPreorder1 = function (preorder) {
+      const insertNode = (parentNode, childNode) => {
+        if (childNode.val < parentNode.val) {
+          if (parentNode.left === null) {
+            parentNode.left = childNode;
+          } else {
+            insertNode(parentNode.left, childNode);
+          }
+        } else {
+          if (parentNode.right === null) {
+            parentNode.right = childNode;
+          } else {
+            insertNode(parentNode.right, childNode);
+          }
+        }
+      }
+      let root = null;
+      const insert = (val) => {
+        let thisNode = new TreeNode(val);
+        if (root === null) {
+          root = thisNode;
+        } else {
+          insertNode(root, thisNode);
+        }
+      }
+      preorder.forEach(val => {
+        insert(val);
+      });
+      let result = null;
+      const preTraverse = function (node) {
+        if (node !== null) {
+          let thisNode = new TreeNode(node.val);
+          if (result === null) {
+            result = thisNode;
+          } else {
+            insertNode(result, thisNode);
+          }
+          preTraverse(node.left);
+          preTraverse(node.right);
+        }
+      }
+      preTraverse(root);
+      return result;
+    };
+    var nodes = [8, 5, 1, 7, 10, 12];
+    console.log(bstFromPreorder1(nodes))//[8,5,10,1,7,null,12]
+
+    var bstFromPreorder = function (preorder) {
+      const insertNode = (parentNode, childNode) => {
+        if (childNode.val < parentNode.val) {
+          if (parentNode.left === null) {
+            parentNode.left = childNode;
+          } else {
+            insertNode(parentNode.left, childNode);
+          }
+        }
+        if (childNode.val > parentNode.val) {
+          if (parentNode.right === null) {
+            parentNode.right = childNode;
+          } else {
+            insertNode(parentNode.right, childNode);
+          }
+        }
+      }
+      let root = null;
+      const insert = (val) => {
+        let thisNode = new TreeNode(val);
+        if (root === null) {
+          root = thisNode;
+        } else {
+          insertNode(root, thisNode);
+        }
+      }
+      preorder.forEach(val => {
+        insert(val);
+      });
+      return root;
+    };
+    console.log(bstFromPreorder(nodes))
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
