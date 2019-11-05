@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+977. Squares of a Sorted Array
+Easy
+
+565
+
+58
+
+Favorite
+
+Share
+Given an array of integers A sorted in non-decreasing order, return an array of the squares of each number, also in sorted non-decreasing order.
+
+ 
+
+Example 1:
+
+Input: [-4,-1,0,3,10]
+Output: [0,1,9,16,100]
+Example 2:
+
+Input: [-7,-3,2,3,11]
+Output: [4,9,9,49,121]
+ 
+
+Note:
+
+1 <= A.length <= 10000
+-10000 <= A[i] <= 10000
+A is sorted in non-decreasing order.
+
+ -->
+  <script>
+    console.time();
+    /**
+ * @param {number[]} A
+ * @return {number[]}
+ */
+    var sortedSquares1 = function (A) {
+      return A.map((v) => {
+        return v * v;
+      }).sort((a, b) => { return a - b });
+    };
+
+    var sortedSquares2 = function (A) {
+      let result = [];
+      const insert = (num) => {
+        for (let i = result.length - 1; i > -1; i--) {
+          if (num >= result[i]) {
+            result.splice(i + 1, 0, num);
+            break;
+          } else if (i === 0) {
+            result.unshift(num);
+          }
+        }
+      }
+      A.map((v, k) => {
+        if (k === 0) {
+          result.push(v * v);
+        } else {
+          insert(v * v);
+        }
+      });
+      return result;
+    };
+
+    //利用原数组已排序好这点
+    var sortedSquares = function (A) {
+      let result = [];
+      let l = 0;
+      let r = A.length - 1;
+      let p = r;
+
+      while (l <= r) {
+        if (A[l] ** 2 > A[r] ** 2) {
+          result[p--] = A[l++] ** 2;
+        } else {
+          result[p--] = A[r--] ** 2;
+        }
+      }
+
+      return result;
+    };
+    console.log(sortedSquares([-4, -1, 0, 3, 10]))//[0,1,9,16,100]
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
