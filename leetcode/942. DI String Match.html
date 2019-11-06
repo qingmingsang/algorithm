@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+942. DI String Match
+Easy
+
+568
+
+208
+
+Favorite
+
+Share
+Given a string S that only contains "I" (increase) or "D" (decrease), let N = S.length.
+
+Return any permutation A of [0, 1, ..., N] such that for all i = 0, ..., N-1:
+
+If S[i] == "I", then A[i] < A[i+1]
+If S[i] == "D", then A[i] > A[i+1]
+ 
+
+Example 1:
+
+Input: "IDID"
+Output: [0,4,1,3,2]
+Example 2:
+
+Input: "III"
+Output: [0,1,2,3]
+Example 3:
+
+Input: "DDI"
+Output: [3,2,0,1]
+ 
+
+Note:
+
+1 <= S.length <= 10000
+S only contains characters "I" or "D".
+Accepted
+
+ -->
+  <script>
+    console.time();
+    /**
+  * @param {string} S
+  * @return {number[]}
+  */
+    var diStringMatch1 = function (S) {
+      let arr = [];
+      for (let i = 0; i <= S.length; i++) {
+        arr.push(i);
+      }
+      let res = [];
+      for (let v of S) {
+        if (v === 'I') {
+          res.push(arr.shift());
+        } else {
+          res.push(arr.pop());
+        }
+      }
+      return res.concat(arr);
+    };
+    var diStringMatch = function (S) {
+      let res = [];
+      let low = 0;
+      let high = S.length;
+      for (let i = 0; i < S.length; i++) {
+        if (S[i] === 'I') {
+          res.push(low++);
+        } else {
+          res.push(high--);
+        }
+      }
+      res.push(low);
+      return res;
+    };
+    console.log('-->', diStringMatch("IDID"))//[0,4,1,3,2]
+    console.log('-->', diStringMatch("III"))//[0,1,2,3]
+    console.log('-->', diStringMatch("DDI"))//[3,2,0,1]
+    console.timeEnd();
+  </script>
+</body>
+
+</html>

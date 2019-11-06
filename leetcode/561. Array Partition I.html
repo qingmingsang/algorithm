@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+561. Array Partition I
+Easy
+
+640
+
+1985
+
+Favorite
+
+Share
+Given an array of 2n integers, your task is to group these integers into n pairs of integer, say (a1, b1), (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+
+Example 1:
+Input: [1,4,3,2]
+
+Output: 4
+Explanation: n is 2, and the maximum sum of pairs is 4 = min(1, 2) + min(3, 4).
+Note:
+n is a positive integer, which is in the range of [1, 10000].
+All the integers in the array will be in the range of [-10000, 10000].
+
+ -->
+  <script>
+    console.time();
+    /**
+ * @param {number[]} nums
+ * @return {number}
+ */
+    var arrayPairSum1 = function (nums) {
+      let sum = 0;
+      nums.sort((a, b) => (a - b)).map((v, k) => {
+        if (k % 2 === 0) {
+          sum += v;
+        }
+      })
+      return sum;
+    };
+    var arrayPairSum2 = function (nums) {
+      return nums.sort((a, b) => (a - b)).filter((v, k) => (k % 2 === 0)).reduce((a, b) => (a + b));
+    };
+    var arrayPairSum3 = function (nums) {
+      nums.sort((x, y) => x - y);
+      let res = 0;
+      for (let i = 0; i < nums.length; i += 2) {
+        res += nums[i];
+      }
+      return res;
+    };
+    var arrayPairSum = function (nums) {
+      return nums.sort((a, b) => (a - b)).reduce((acc, v, i) => {
+        return acc + (i % 2 === 0 ? v : 0)
+      }, 0)
+    };
+    const swap = (arr, i, j) => {
+      const tmp = arr[i]
+      arr[i] = arr[j]
+      arr[j] = tmp
+    }
+
+    const getPivot = (array, start, end) => {
+      const pivotVal = array[end]
+      let pivotIndex = start
+      for (let i = start; i < end; i++) {
+        if (array[i] < pivotVal) {
+          swap(array, i, pivotIndex)
+          pivotIndex++
+        }
+      }
+      swap(array, pivotIndex, end)
+      return pivotIndex
+    }
+
+    const quickSort = (array, start, end) => {
+      if (start < end) {
+        const p = getPivot(array, start, end)
+        quickSort(array, start, p - 1)
+        quickSort(array, p + 1, end)
+      }
+    }
+    let a = [1, 4, 3, 2];
+    quickSort(a, 0, 3)
+    console.log(a)
+    console.log('-->', arrayPairSum([1, 4, 3, 2]))//4
+    console.log('-->', arrayPairSum([1, 1]))//1
+    console.log('-->', arrayPairSum([6214, -2290, 2833, -7908]))//-5075
+    console.timeEnd();
+  </script>
+</body>
+
+</html>

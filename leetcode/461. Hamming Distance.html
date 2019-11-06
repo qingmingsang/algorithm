@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+461. Hamming Distance
+Easy
+
+1425
+
+137
+
+Favorite
+
+Share
+The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+
+Given two integers x and y, calculate the Hamming distance.
+
+Note:
+0 ≤ x, y < 231.
+
+Example:
+
+Input: x = 1, y = 4
+
+Output: 2
+
+Explanation:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+
+The above arrows point to positions where the corresponding bits are different.
+
+ -->
+  <script>
+    console.time();
+    /**
+   * @param {number} x
+   * @param {number} y
+   * @return {number}
+   */
+    var hammingDistance1 = function (x, y) {
+      let a = x.toString(2);
+      let b = y.toString(2);
+      let count = 0;
+      let al = a.length;
+      let bl = b.length;
+      let cover = '';
+      for (let i = 0; i < Math.abs(al - bl); i++) {
+        cover += '0';
+      }
+      if (al > bl) {
+        length = al;
+        b = cover + b;
+      } else {
+        length = bl;
+        a = cover + a;
+      }
+      for (let i = 0; i < length; i++) {
+        if (a[i] !== b[i]) {
+          count++;
+        }
+      }
+      return count;
+    };
+    var hammingDistance = function (x, y) {
+      let count = 0;
+      while (x > 0 || y > 0) {
+        let remx = x % 2;
+        let remy = y % 2;
+
+        if (remx != remy) {
+          count++;
+        }
+
+        x = Math.floor(x / 2);
+        y = Math.floor(y / 2);
+      }
+      return count;
+    };
+    console.log('-->', hammingDistance(1, 4))//2
+    console.log('-->', hammingDistance(4, 14))//2
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
