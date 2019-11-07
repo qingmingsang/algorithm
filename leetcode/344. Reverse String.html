@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+344. Reverse String
+Easy
+
+922
+
+585
+
+Favorite
+
+Share
+Write a function that reverses a string. The input string is given as an array of characters char[].
+
+Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+
+You may assume all the characters consist of printable ascii characters.
+
+ 
+
+Example 1:
+
+Input: ["h","e","l","l","o"]
+Output: ["o","l","l","e","h"]
+Example 2:
+
+Input: ["H","a","n","n","a","h"]
+Output: ["h","a","n","n","a","H"]
+ 
+ -->
+  <script>
+    console.time();
+    /**
+     * @param {character[]} s
+     * @return {void} Do not return anything, modify s in-place instead.
+     */
+    var reverseString1 = function (s) {
+      s.reverse();
+    };
+    var reverseString2 = function (s) {
+      for (let i = 0, j = s.length - 1; i < j; i++ , j--) {
+        const x = s[i]; const y = s[j];
+        s[i] = y; s[j] = x;
+      }
+    };
+    var reverseString3 = function (s) {
+      let high = s.length - 1;
+      let low = 0;
+      let temp = '';
+      while (low < high) {
+        temp = s[low];
+        s[low++] = s[high];
+        s[high--] = temp;
+      }
+      console.log(s);
+    };
+    var reverseString = function (s) {
+      if (s.length == 0) {
+        return;
+      }
+      var temp = s.shift();
+      reverseString(s);
+      s.push(temp);
+      console.log(s);
+    };
+    console.log('-->', reverseString(["h", "e", "l", "l", "o"]))//
+    console.log('-->', reverseString(["H", "a", "n", "n", "a", "h"]))//
+    console.timeEnd();
+  </script>
+</body>
+
+</html>

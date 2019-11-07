@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+136. Single Number
+Easy
+
+3000
+
+117
+
+Favorite
+
+Share
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+
+Input: [2,2,1]
+Output: 1
+Example 2:
+
+Input: [4,1,2,1,2]
+Output: 4
+ 
+ -->
+  <script>
+    console.time();
+    /**
+     * @param {number[]} nums
+     * @return {number}
+     */
+    var singleNumber1 = function (nums) {
+      for (let i = 0; i < nums.length; i++) {
+        if (nums[i] === null) {
+          continue;
+        }
+        let state = true;
+        for (let j = i + 1; j < nums.length; j++) {
+          if (nums[j] === null) {
+            continue;
+          }
+          if (nums[i] === nums[j]) {
+            nums[i] = null;
+            nums[j] = null;
+            state = false;
+            break;
+          }
+        }
+        if (state) {
+          return nums[i];
+        }
+      }
+    };
+    var singleNumber2 = function (nums) {
+      //Map比{}快
+      let s = new Map();
+      for (let v of nums) {
+        if (s.has(v)) {
+          s.set(v, 1);
+        } else {
+          s.set(v, 0);
+        }
+      }
+      for (let v of s) {
+        if (v[1] === 0) {
+          return v[0];
+        }
+      }
+    };
+    var singleNumber3 = function (nums) {
+      let s = {};
+      for (let v of nums) {
+        if (s[v]) {
+          s[v]++;
+        } else {
+          s[v] = 1;
+        }
+      }
+      for (let i in s) {
+        if (s[i] === 1) {
+          return i;
+        }
+      }
+    };
+    function singleNumber4(nums) {
+      //神奇的xor 异或
+      let num = 0;
+      for (let n of nums) {
+        num ^= n;
+        console.log(num)
+      }
+      return num;
+    }
+    var singleNumber = function (nums) {
+      let s = new Map();
+      for (let v of nums) {
+        if (s.has(v)) {
+          s.delete(v);
+        } else {
+          s.set(v, 1);
+        }
+      }
+      for (let v of s.keys()) {
+        return v;
+      }
+    };
+    console.log('-->', singleNumber([2, 2, 1]))//
+    console.log('-->', singleNumber([4, 1, 2, 1, 2]))//
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
