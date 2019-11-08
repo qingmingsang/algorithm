@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+217. Contains Duplicate
+Easy
+
+508
+
+584
+
+Favorite
+
+Share
+Given an array of integers, find if the array contains any duplicates.
+
+Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+
+Example 1:
+
+Input: [1,2,3,1]
+Output: true
+Example 2:
+
+Input: [1,2,3,4]
+Output: false
+Example 3:
+
+Input: [1,1,1,3,3,4,3,2,4,2]
+Output: true
+
+ -->
+  <script>
+    console.time();
+    /**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+    var containsDuplicate1 = function (nums) {
+      let s = new Map();
+      for (let v of nums) {
+        if (s.has(v)) {
+          return true;
+        } else {
+          s.set(v, 1);
+        }
+      }
+      return false;
+    };
+    var containsDuplicate2 = function (nums) {
+      let s = new Set();
+      for (let v of nums) {
+        if (s.has(v)) {
+          return true;
+        } else {
+          s.add(v);
+        }
+      }
+      return false;
+    };
+    var containsDuplicate = function (nums) {
+      return (new Set(nums).size !== nums.length);
+    };
+    console.log('-->', containsDuplicate([1, 2, 3, 1]))//
+    console.timeEnd();
+  </script>
+</body>
+
+</html>

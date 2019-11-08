@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+237. Delete Node in a Linked List
+Easy
+
+945
+
+4655
+
+Favorite
+
+Share
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+Given linked list -- head = [4,5,1,9], which looks like following:
+
+
+
+ 
+
+Example 1:
+
+Input: head = [4,5,1,9], node = 5
+Output: [4,1,9]
+Explanation: You are given the second node with value 5, the linked list should become 4 -> 1 -> 9 after calling your function.
+Example 2:
+
+Input: head = [4,5,1,9], node = 1
+Output: [4,5,9]
+Explanation: You are given the third node with value 1, the linked list should become 4 -> 5 -> 9 after calling your function.
+ 
+
+Note:
+
+The linked list will have at least two elements.
+All of the nodes' values will be unique.
+The given node will not be the tail and it will always be a valid node of the linked list.
+Do not return anything from your function.
+
+ -->
+  <script>
+    console.time();
+    function ListNode(val) {
+      this.val = val;
+      this.next = null;
+    }
+    function LinkedList(list) {
+      let head = null
+      const append = (element) => { // 向链表尾部加一个元素
+        let node = new ListNode(element)
+        let current
+        if (head === null) {
+          head = node
+        } else {
+          current = head
+          while (current.next) {
+            current = current.next
+          }
+          current.next = node
+        }
+      }
+      list.map((v) => {
+        append(v);
+      })
+      return head;
+    }
+    let x = LinkedList([4, 5, 1, 9]);
+    console.log(x)
+    let y = LinkedList([4, 5, 1, 9]);
+    console.log(y)
+    let z = LinkedList([]);
+    console.log(z)
+    /**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+    /**
+     * @param {ListNode} node
+     * @return {void} Do not return anything, modify node in-place instead.
+     */
+    let head = LinkedList([4, 5, 1, 9]);
+    console.log(head)
+    var deleteNode1 = function (node, target) {
+      if (!node) {
+        return null;
+      }
+      console.log(node)
+      let cur = node;
+      let prev = null;
+      while (cur && cur.val !== target) {
+        prev = cur;
+        cur = cur.next;
+      }
+      let next = cur.next;
+      cur.next = null;//并不清楚是否释放了内存
+      prev.next = next;
+    };
+    var deleteNode = function (node) {
+      //实际上是把命中的节点的next指向了下下个，而下一个节点是否释放未知
+      node.val = node.next.val;
+      node.next = node.next.next;
+    };
+    //console.log('-->', deleteNode(5))//
+    console.log('-->', deleteNode(1))//
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
