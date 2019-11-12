@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+    108. Convert Sorted Array to Binary Search Tree
+Easy
+
+1538
+
+157
+
+Favorite
+
+Share
+Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
+
+For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.
+
+Example:
+
+Given the sorted array: [-10,-3,0,5,9],
+
+One possible answer is: [0,-3,9,-10,null,5], which represents the following height balanced BST:
+
+      0
+     / \
+   -3   9
+   /   /
+ -10  5
+
+ -->
+  <script>
+    console.time();
+    const TreeNode = function (val) {
+      // 节点的构造函数
+      this.val = val; // 节点的值
+      this.left = null; // 左子树节点
+      this.right = null; // 右子树节点
+    }
+    const BinaryTree = (nodes) => {
+      // 根节点
+      let root = null;
+      // 插入root的子节点
+      const insertNode = (parentNode, childNode) => {
+        // 左子树构造
+        if (childNode.val < parentNode.val) {
+          // 为空时赋值，否则继续延伸
+          if (parentNode.left === null) {
+            parentNode.left = childNode;
+          } else {
+            insertNode(parentNode.left, childNode);
+          }
+        } else { // 右子树的构造 childNode.val > parentNode.val
+          if (parentNode.right === null) {
+            parentNode.right = childNode;
+          } else {
+            insertNode(parentNode.right, childNode);
+          }
+        }
+      }
+      // 插入节点的实例方法
+      const insert = (val) => {
+        let thisNode = new TreeNode(val);
+        // 根节点赋值
+        if (root === null) {
+          root = thisNode;
+        } else {
+          // 插入子节点
+          insertNode(root, thisNode);
+        }
+      }
+      nodes.map(val => {
+        insert(val);
+      });
+      return root;
+    }
+    console.log(BinaryTree([3, 1, 5, 0, 2, 4]))//
+    /**
+     * Definition for a binary tree node.
+     * function TreeNode(val) {
+     *     this.val = val;
+     *     this.left = this.right = null;
+     * }
+     */
+    /**
+     * @param {number[]} nums
+     * @return {TreeNode}
+     */
+    //不断的寻找中位数
+    var sortedArrayToBST = function (nums) {
+      if (!nums.length) return null;
+      var mid = Math.floor((nums.length) / 2);
+      var root = new TreeNode(nums[mid]);
+      root.left = sortedArrayToBST(nums.slice(0, mid));
+      root.right = sortedArrayToBST(nums.slice(mid + 1));
+      return root;
+    }
+    console.log('-->', sortedArrayToBST([-10, -3, 0, 5, 9]))
+    console.log('-->', sortedArrayToBST([0, 1, 2, 3, 4, 5]))
+    console.log('-->', sortedArrayToBST([0, 1, 2, 3, 4, 5, 6]))
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
