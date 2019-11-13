@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+    387. First Unique Character in a String
+Easy
+
+1272
+
+89
+
+Favorite
+
+Share
+Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
+
+Examples:
+
+s = "leetcode"
+return 0.
+
+s = "loveleetcode",
+return 2.
+Note: You may assume the string contain only lowercase letters.
+
+   -->
+  <script>
+    console.time();
+    /**
+ * @param {string} s
+ * @return {number}
+ */
+    var firstUniqChar1 = function (s) {
+      let ss = new Map();
+      for (let i = 0; i < s.length; i++) {
+        let v = s[i];
+        if (ss.has(v)) {
+          ss.set(v, ss.get(v).concat(i));
+        } else {
+          ss.set(v, [i]);
+        }
+      }
+      for (let [k, v] of ss) {
+        if (v.length === 1) {
+          return v[0];
+        }
+      }
+      return -1;
+    };
+
+    var firstUniqChar2 = function (s) {
+      let ss = new Map();
+      for (let v of s) {
+        if (ss.has(v)) {
+          ss.set(v, 2);
+        } else {
+          ss.set(v, 1);
+        }
+      }
+      for (let i = 0; i < s.length; i++) {
+        let v = s[i];
+        if (ss.has(v) && ss.get(v) === 1) {
+          return i;
+        }
+      }
+      return -1;
+    };
+
+    var firstUniqChar = function (s) {
+      for (i = 0; i < s.length; i++) {
+        if (s.indexOf(s[i]) === s.lastIndexOf(s[i])) {
+          return i;
+        }
+      }
+      return -1;
+    };
+    console.log('------->', firstUniqChar('leetcode'));
+    console.log('------->', firstUniqChar('loveleetcode'));
+    console.log('------->', firstUniqChar('cc'));
+    console.log('------->', firstUniqChar('cca'));
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
