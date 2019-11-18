@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+268. Missing Number
+Easy
+
+1156
+
+1577
+
+Favorite
+
+Share
+Given an array containing n distinct numbers taken from 0, 1, 2, ..., n, find the one that is missing from the array.
+
+Example 1:
+
+Input: [3,0,1]
+Output: 2
+Example 2:
+
+Input: [9,6,4,2,3,5,7,0,1]
+Output: 8
+Note:
+Your algorithm should run in linear runtime complexity. Could you implement it using only constant extra space complexity?
+
+   -->
+  <script>
+    console.time();
+    /**
+  * @param {number[]} nums
+  * @return {number}
+  */
+    var missingNumber1 = function (nums) {
+      let max = Math.max(...nums);
+      for (let i = 0; i < max; i++) {
+        if (nums.indexOf(i) === -1) {
+          return i;
+        }
+      }
+      return max + 1;
+    };
+    var missingNumber2 = function (nums) {
+      let sum = 0, total = 0
+      for (let i = 0; i < nums.length; i++) {
+        sum += nums[i]
+        total += i + 1
+      }
+      return total - sum
+    };
+    var missingNumber3 = function (nums) {
+      let len = nums.length;//length of array.
+      let sum = (len * (len + 1)) / 2; // sum of all nos from 0 to n by series formula
+      let sum2 = nums.reduce((a, c) => a + c); //sum of array elements.
+      return sum - sum2; //difference is the answer
+    };
+    var missingNumber = function (nums) {
+      var res = nums.length;
+
+      for (var i = 0; i < nums.length; i++) {
+        res ^= i ^ nums[i];
+      }
+
+      return res;
+    };
+    console.log('------->', missingNumber([3, 0, 1]));
+    console.log('------->', missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1]));
+    console.log('------->', missingNumber([0]));
+    console.timeEnd();
+  </script>
+</body>
+
+</html>

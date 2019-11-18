@@ -18,177 +18,71 @@
 <body>
   <!-- 
 
-371. Sum of l2 Integers
+350. Intersection of Two Arrays II
 Easy
 
-902
+905
 
-1695
+314
 
 Favorite
 
 Share
-Calculate the sum of l2 integers a and b, but you are not allowed to use the operator + and -.
+Given two arrays, write a function to compute their intersection.
 
 Example 1:
 
-Input: a = 1, b = 2
-Output: 3
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
 Example 2:
 
-Input: a = -2, b = 3
-Output: 1
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Note:
+
+Each element in the result should appear as many times as it shows in both arrays.
+The result can be in any order.
+Follow up:
+
+What if the given array is already sorted? How would you optimize your algorithm?
+What if nums1's size is small compared to nums2's size? Which algorithm is better?
+What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
 
    -->
   <script>
     console.time();
-    function ListNode(val) {
-      this.val = val;
-      this.next = null;
-    }
-    function LinkedList(list) {
-      let head = null
-      const append = (element) => { // 向链表尾部加一个元素
-        let node = new ListNode(element)
-        let current
-        if (head === null) {
-          head = node
-        } else {
-          current = head
-          while (current.next) {
-            current = current.next
-          }
-          current.next = node
-        }
-      }
-      list.map((v) => {
-        append(v);
-      })
-      return head;
-    }
-    let a = LinkedList([1, 2, 4])
-    let b = LinkedList([1, 3, 4])
-    console.log(a, b)
-    let c = LinkedList([1, 2, 3])
-    let d = LinkedList([1, 3, 4])
-    console.log(c, d)
     /**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-    /**
-     * @param {ListNode} l1
-     * @param {ListNode} l2
-     * @return {ListNode}
-     */
-    var mergeTwoLists1 = function (l1, l2) {
-      if (!l1) {
-        return l2;
-      }
-      if (!l2) {
-        return l1;
-      }
-      let result = l1;
-      while (l1) {
-        if (l2) {
-          let oneNext = l1.next;
-          let twoNext = l2.next;
-          if (l2.val >= l1.val) {
-            l1.next = l2;
-            result = l1;
-            l2.next = oneNext;
-            l1 = oneNext;
-            l2 = twoNext;
-          } else {
-            l2.next = l1;
-            result = l2;
-            l1 = oneNext;
-            l2 = twoNext;
-          }
+  * @param {number[]} nums1
+  * @param {number[]} nums2
+  * @return {number[]}
+  */
+    var intersect = function (nums1, nums2) {
+      let s = new Map();
+      let s2 = new Map();
+      for (let v of nums1) {
+        if (s.has(v)) {
+          s.set(v, s.get(v) + 1);
         } else {
-          l1 = l1.next;
+          s.set(v, 1);
         }
       }
-      return result;
-    };
-    var mergeTwoLists2 = function (l1, l2) {
-      if (!l1) {
-        return l2;
-      }
-      if (!l2) {
-        return l1;
-      }
-      let aArr = [];
-      let bArr = [];
-      while (l1) {
-        aArr.push(l1.val);
-        l1 = l1.next;
-      }
-      while (l2) {
-        bArr.push(l2.val);
-        l2 = l2.next;
-      }
-      let list = aArr.concat(bArr).sort((a, b) => (a - b));
-      let head = null
-      const append = (element) => { // 向链表尾部加一个元素
-        let node = new ListNode(element)
-        let current
-        if (head === null) {
-          head = node
+      for (let v of nums2) {
+        if (s2.has(v)) {
+          s2.set(v, s2.get(v) + 1);
         } else {
-          current = head
-          while (current.next) {
-            current = current.next
-          }
-          current.next = node
+          s2.set(v, 1);
         }
       }
-      list.map((v) => {
-        append(v);
-      })
-      return head;
-    };
-    var mergeTwoLists3 = function (l1, l2) {
-      let head = { next: null };
-      let c1 = l1;
-      let c2 = l2;
-      let p = head;
-      while (c1 || c2) {
-        if ((c1 && !c2) || (c1 && c1.val < c2.val)) {
-          p.next = c1;
-          c1 = c1.next;
-        } else {
-          p.next = c2;
-          c2 = c2.next;
+      let res = [];
+      for (let [k, v] of s) {
+        if (s2.has(k)) {
+          res.push(...new Array(Math.min(v, s2.get(k))).fill(k));
         }
-        p = p.next;
       }
-      return head.next;
+      return res;
     };
-
-    var mergeTwoLists = function (l1, l2) {
-      let preHead = new ListNode();
-      let cur = preHead;
-
-      while (l1 && l2) {
-        if (l1.val <= l2.val) {
-          cur.next = new ListNode(l1.val);
-          l1 = l1.next;
-        }
-        else {
-          cur.next = new ListNode(l2.val);
-          l2 = l2.next;
-        }
-        cur = cur.next;
-      }
-      cur.next = l1 || l2
-      return preHead.next;
-    };
-    console.log('------->', mergeTwoLists(a, b));
-    console.log('------->', mergeTwoLists(c, d));
+    console.log('------->', intersect([1, 2, 2, 1], [2, 2]));
+    console.log('------->', intersect([4, 9, 5], [9, 4, 9, 8, 4]));
     console.timeEnd();
   </script>
 </body>
