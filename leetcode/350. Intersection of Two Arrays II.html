@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+
+350. Intersection of Two Arrays II
+Easy
+
+905
+
+314
+
+Favorite
+
+Share
+Given two arrays, write a function to compute their intersection.
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Note:
+
+Each element in the result should appear as many times as it shows in both arrays.
+The result can be in any order.
+Follow up:
+
+What if the given array is already sorted? How would you optimize your algorithm?
+What if nums1's size is small compared to nums2's size? Which algorithm is better?
+What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
+
+   -->
+  <script>
+    console.time();
+    /**
+  * @param {number[]} nums1
+  * @param {number[]} nums2
+  * @return {number[]}
+  */
+    var intersect1 = function (nums1, nums2) {
+      let s = new Map();
+      let s2 = new Map();
+      for (let v of nums1) {
+        if (s.has(v)) {
+          s.set(v, s.get(v) + 1);
+        } else {
+          s.set(v, 1);
+        }
+      }
+      for (let v of nums2) {
+        if (s2.has(v)) {
+          s2.set(v, s2.get(v) + 1);
+        } else {
+          s2.set(v, 1);
+        }
+      }
+      let res = [];
+      for (let [k, v] of s) {
+        if (s2.has(k)) {
+          res.push(...new Array(Math.min(v, s2.get(k))).fill(k));
+        }
+      }
+      return res;
+    };
+    var intersect = function (nums1, nums2) {
+      let s = new Map();
+      for (let v of nums1) {
+        if (s.has(v)) {
+          s.set(v, s.get(v) + 1);
+        } else {
+          s.set(v, 1);
+        }
+      }
+      let res = [];
+      for (let v of nums2) {
+        if (s.has(v) && s.get(v) > 0) {
+          res.push(v);
+          s.set(v, s.get(v) - 1);
+        }
+      }
+      return res;
+    };
+    console.log('------->', intersect([1, 2, 2, 1], [2, 2]));
+    console.log('------->', intersect([4, 9, 5], [9, 4, 9, 8, 4]));
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
