@@ -18,80 +18,50 @@
 <body>
   <!-- 
 
-202. Happy Number
+70. Climbing Stairs
 Easy
 
-1166
+2899
 
-294
+99
 
 Favorite
 
 Share
-Write an algorithm to determine if a number is "happy".
+You are climbing a stair case. It takes n steps to reach to the top.
 
-A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-Example: 
+Note: Given n will be a positive integer.
 
-Input: 19
-Output: true
-Explanation: 
-12 + 92 = 82
-82 + 22 = 68
-62 + 82 = 100
-12 + 02 + 02 = 1
+Example 1:
+
+Input: 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+Example 2:
+
+Input: 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
 
    -->
   <script>
     console.time();
     /**
-    * @param {number} n
-    * @return {boolean}
-    */
-    var isHappy1 = function (n) {
-      let res = n;
-      let num = n;
-      let dig = 0;
-      let count = 0;
-      while (res !== 1) {
-        num = res;
-        res = 0;
-        while (num !== 0) {
-          dig = num % 10;
-          num = Math.floor(num / 10);
-          res += dig * dig;
-        }
-        count++;
-        if (count > 100) {
-          return false;
-        }
-      }
-      return true;
+     * @param {number} n
+     * @return {number}
+     */
+    var climbStairs = function (n) {
+
     };
-    var isHappy = function (n) {
-      let res = n;
-      let num = n;
-      let dig = 0;
-      let count = 0;
-      let s = new Set();
-      while (res !== 1) {
-        if (s.has(res)) {
-          return false;
-        }
-        s.add(res);
-        num = res;
-        res = 0;
-        while (num !== 0) {
-          dig = num % 10;
-          num = Math.floor(num / 10);
-          res += dig * dig;
-        }
-      }
-      return true;
-    };
-    console.log('------->', isHappy(19));//true 
-    console.log('------->', isHappy(2));
+    console.log('------->', climbStairs(2));//2
+    console.log('------->', climbStairs(3));//3
     console.timeEnd();
   </script>
 </body>
