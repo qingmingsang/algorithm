@@ -18,50 +18,126 @@
 <body>
   <!-- 
 
-70. Climbing Stairs
+101. Symmetric Tree
 Easy
 
-2899
+2868
 
-99
+66
 
 Favorite
 
 Share
-You are climbing a stair case. It takes n steps to reach to the top.
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
 
-Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
 
-Note: Given n will be a positive integer.
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+ 
+        1
+      / \
+      2   2
+    / \ / \
+   3  4 4  3
+  /\  /\ /\ /\
+ 6 7 9 8 8 9 7 6
 
-Example 1:
+But the following [1,2,2,null,3,null,3] is not:
 
-Input: 2
-Output: 2
-Explanation: There are two ways to climb to the top.
-1. 1 step + 1 step
-2. 2 steps
-Example 2:
+    1
+   / \
+  2   2
+   \   \
+   3    3
+ 
 
-Input: 3
-Output: 3
-Explanation: There are three ways to climb to the top.
-1. 1 step + 1 step + 1 step
-2. 1 step + 2 steps
-3. 2 steps + 1 step
+Note:
+Bonus points if you could solve it both recursively and iteratively.
 
    -->
   <script>
     console.time();
     /**
-     * @param {number} n
-     * @return {number}
+     * Definition for a binary tree node.
+     * function TreeNode(val) {
+     *     this.val = val;
+     *     this.left = this.right = null;
+     * }
      */
-    var climbStairs = function (n) {
+    /**
+     * @param {TreeNode} root
+     * @return {boolean}
+     */
+    var isSymmetric = function (root) {
+      if (!root) { // Sanity check
+        return true;
+      }
 
+      // Check if tree s & t are mirroring each other
+      function isMirror(s, t) {
+        if (!s && !t) {
+          return true; // Both nodes are null, ok
+        }
+        if (!s || !t || s.val !== t.val) {
+          return false; // Found a mismatch
+        }
+        // Compare the left subtree of `s` with the right subtree of `t`
+        // and the right subtree of `s` with the left subtree of `t`
+        return isMirror(s.left, t.right) && isMirror(s.right, t.left);
+      }
+
+      return isMirror(root.left, root.right);
     };
-    console.log('------->', climbStairs(2));//2
-    console.log('------->', climbStairs(3));//3
+
+    function isMirror(p, q) {
+      // Create two stacks
+      var s1 = [p], s2 = [q];
+
+      // Perform preorder traversal
+      while (s1.length > 0 || s2.length > 0) {
+        var n1 = s1.pop(), n2 = s2.pop();
+
+        // Two null nodes, let's continue
+        if (!n1 && !n2) continue;
+
+        // Return false as long as there is a mismatch
+        if (!n1 || !n2 || n1.val !== n2.val) return false;
+
+        // Scan tree s from left to right
+        // and scan tree t from right to left
+        s1.push(n1.left); s1.push(n1.right);
+        s2.push(n2.right); s2.push(n2.left);
+      }
+
+      return true;
+    }
+    function isMirror(s, t) {
+      var q1 = [s], q2 = [t];
+
+      // Perform breadth-first search
+      while (q1.length > 0 || q2.length > 0) {
+        // Dequeue
+        var n1 = q1.shift(), n2 = q2.shift();
+
+        // Two null nodes, let's continue
+        if (!n1 && !n2) continue;
+
+        // Return false as long as there is a mismatch
+        if (!n1 || !n2 || n1.val !== n2.val) return false;
+
+        // Scan tree s from left to right
+        // and scan tree t from right to left
+        q1.push(n1.left); q1.push(n1.right);
+        q2.push(n2.right); q2.push(n2.left);
+      }
+
+      return true;
+    }
+    //console.log('------->', isSymmetric(3));//3
     console.timeEnd();
   </script>
 </body>
