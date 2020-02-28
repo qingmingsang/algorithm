@@ -60,6 +60,13 @@ Bonus points if you could solve it both recursively and iteratively.
 
    -->
   <script>
+    let one = () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('ok')
+        }, 1000)
+      })
+    }
     console.time();
     /**
      * Definition for a binary tree node.
@@ -115,7 +122,7 @@ Bonus points if you could solve it both recursively and iteratively.
 
       return true;
     }
-    function isMirror(s, t) {
+    function isMirror2(s, t) {
       var q1 = [s], q2 = [t];
 
       // Perform breadth-first search
