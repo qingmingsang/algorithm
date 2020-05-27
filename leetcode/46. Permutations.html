@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello</title>
+  <meta name="description" content="">
+  <meta name="valwords" content="">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 默认使用webkit内核 -->
+  <meta name="renderer" content="webkit">
+  <!-- 兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link href="" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 
+46. Permutations
+Medium
+
+3563
+
+102
+
+Add to List
+
+Share
+Given a collection of distinct integers, return all possible permutations.
+
+Example:
+
+Input: [1,2,3]
+Output:
+[
+  [1,2,3],
+  [1,3,2],
+  [2,1,3],
+  [2,3,1],
+  [3,1,2],
+  [3,2,1]
+]
+   -->
+  <script>
+    console.time();
+    /**
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
+    const permute1 = (nums) => {
+      const res = [];
+      const go = (cur, rest) => {
+        if (rest.length === 0) {
+          res.push(cur);
+          return;
+        }
+        for (let i = 0; i < rest.length; i++) {
+          go(
+            [...cur, rest[i]],
+            [...rest.slice(0, i), ...rest.slice(i + 1)],
+          );
+        }
+      };
+      go([], nums);
+      return res;
+    };
+    var permute2 = function (nums) {
+      const res = [];
+      backtrack(nums, res);
+      return res;
+    };
+
+    function backtrack(nums, res, n = 0) {
+      if (n === nums.length - 1) {
+        res.push([...nums]);
+        return;
+      }
+      for (let i = n; i < nums.length; i++) {
+        [nums[i], nums[n]] = [nums[n], nums[i]];
+        backtrack(nums, res, n + 1);
+        [nums[i], nums[n]] = [nums[n], nums[i]];
+      }
+    }
+    var permute3 = function (nums, n = 0) {
+      if (n >= nums.length) return [[]];
+      const res = [];
+      const prevs = permute(nums, n + 1);  // permutations of elements after n
+      for (let prev of prevs) {
+        for (let i = 0; i <= prev.length; i++) {
+          let p = prev.slice(0);
+          p.splice(i, 0, nums[n]);  // successively insert element n
+          res.push(p);
+        }
+      }
+      return res;
+    };
+    var permute4 = function (nums) {
+      return nums.reduce((result, num) => {
+        return result.reduce((permutations, permutation) => {
+          permutation.push(num);
+          for (let i = permutation.length - 1; i; i--) {
+            permutations.push([...permutation])
+            permutation[i] = permutation[i - 1];
+            permutation[i - 1] = num;
+          }
+          permutations.push(permutation);
+          return permutations;
+        }, [])
+      }, [[]])
+    };
+
+    var permute5 = function (nums) {
+      //nums are distinct numbers.
+      var numsLen = nums.length,
+        result = [];
+
+      function getPermutations(currentArray, candidateArray) {
+        var candidateArrayLen = candidateArray.length, index;
+        if (candidateArrayLen === 0) {
+          result.push([...currentArray]);
+        } else {
+          for (index = 0; index < candidateArrayLen; index++) {
+            var nextCandidate = candidateArray.slice(); //Same reason, array is object, copy is needed. 
+            currentArray.push(candidateArray[index]);
+            nextCandidate.splice(index, 1);
+            getPermutations(currentArray, nextCandidate);
+            currentArray.pop();
+          }
+        }
+      }
+      getPermutations([], nums);
+      return result;
+    };
+
+    var permute6 = function (nums) {
+      let permutations = []
+      let findPermutations = (visited = new Set(), currPerm = []) => {
+        if (currPerm.length === nums.length) {
+          permutations.push(currPerm)
+          return
+        }
+        for (let i = 0; i < nums.length; i++) {
+          if (!visited.has(i)) {
+            findPermutations(new Set([...visited, i]), [...currPerm, nums[i]])
+          }
+        }
+      }
+      findPermutations()
+      return permutations;
+    };
+    var permute = function (nums) {
+      const output = [];
+      /**
+       * The goal is break down the problem by finding permutations in subarrays.
+       * So we will maintain a subarray of fixed elements and a subarray for 
+       * exploring permutations.
+       *
+       *                  [1], [2, 3]    [1, 2], [3]    [1, 2, 3]
+       * [], [1, 2, 3] -> [2], [1, 3] -> [1, 3], [2] -> [1, 3, 2]
+       *                  [3], [1, 2]    [2, 1], [1]    [2, 1, 3]
+       *                                 [2, 3], [1]    [2, 3, 1]
+       *                                 [3, 1], [2]    [3, 1, 2]
+       *                                 [3, 2], [1]    [3, 2, 1]                                 
+       */
+      const dfs = (curr, rest) => {
+        // base case. Found a permutation because there's nothing else to explore.
+        if (rest.length === 0) {
+          //没有剩余项,将遍历完的子集push入结果,该次的递归结束
+          output.push(curr);
+          return;
+        }
+        for (let i = 0; i < rest.length; i++) {
+          dfs(
+            [...curr, rest[i]],//当前项
+            [...rest.slice(0, i), ...rest.slice(i + 1)]//剩余项
+          );
+        }
+      }
+      dfs([], nums);
+
+      return output;
+    };
+    console.log('------->', permute([1, 2, 3]));
+    console.log('------->', permute([0, 1]));
+    console.timeEnd();
+  </script>
+</body>
+
+</html>
