@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>hello</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 默认使用webkit内核 -->
+        <meta name="renderer" content="webkit">
+        <!-- 兼容模式 -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <link href="" rel="stylesheet">
+    </head>
+
+    <body>
+        <pre>
+            221. Maximal Square
+            Medium
+            
+            2880
+            
+            74
+            
+            Add to List
+            
+            Share
+            Given a 2D binary matrix filled with 0's and 1's, find the largest square containing only 1's and return its area.
+            
+            Example:
+            
+            Input: 
+            
+            1 0 1 0 0
+            1 0 1 1 1
+            1 1 1 1 1
+            1 0 0 1 0
+            
+            Output: 4
+        </pre>
+        <script>
+            console.time();
+            /**
+             * @param {character[][]} matrix
+             * @return {number}
+             */
+            var maximalSquare = function (matrix) {
+                if (matrix.length == 0) {
+                    return 0;
+                }
+                let m = matrix.length - 1;
+                let n = matrix[0].length - 1;
+                let max = 0;
+                for (let i = 0; i <= m; i++) {
+                    for (let j = 0; j <= n; j++) {
+                        let v = matrix[i][j];
+                        if (v == 1) {
+                            let l = Number((matrix[i - 1] || [])[j]) || 0;
+                            let t = Number((matrix[i] || [])[j - 1]) || 0;
+                            let lt = Number((matrix[i - 1] || [])[j - 1]) || 0;
+                            let x = Math.min(l, t, lt) + 1;
+                            max = Math.max(max, x);
+                            matrix[i][j] = x;
+                        }
+                    }
+                }
+                return max * max;
+            };
+            console.log(maximalSquare([
+                ["1", "0", "1", "0", "0"],
+                ["1", "0", "1", "1", "1"],
+                ["1", "1", "1", "1", "1"],
+                ["1", "0", "0", "1", "0"]
+            ]))//4
+            console.log(maximalSquare([
+                ["1", "0", "1", "0", "0"],
+                ["1", "1", "1", "0", "1"],
+                ["1", "1", "1", "1", "1"],
+                ["1", "1", "1", "1", "0"]
+            ]))//9
+            console.log(maximalSquare([]))//0
+            console.log(maximalSquare([[0]]))//0
+            console.log(maximalSquare([[0, 0]]))//0
+            console.log(maximalSquare([[1]]))//1
+            console.log(maximalSquare([[1, 1]]))//1
+            console.log(maximalSquare([[1, 1, 1]]))//1
+            console.log(maximalSquare([["1", "0"]]))//1
+            console.log(maximalSquare([["1"], ["1"]]))//1
+            console.log(maximalSquare([["1"], ["0"]]))//1
+            console.log(maximalSquare([["1", "0"], ["1", "0"]]))//1
+            console.log(maximalSquare([["1", "0"], ["1", "1"]]))//1
+            console.log(maximalSquare([
+                ["1", "1", "0", "1"],
+                ["1", "1", "0", "1"],
+                ["1", "1", "1", "1"]
+            ]))//4
+            console.timeEnd();
+        </script>
+    </body>
+
+</html>
